@@ -1,5 +1,25 @@
 ﻿# Image Recognition Skill for Codex · 图像识别技能
 
+## 🆕 v2.0 — Trigger Discovery · 触发词发现
+
+**Problem:** SKILL.md descriptions are advisory, not mandatory. Different Codex agents interpret "image" keywords inconsistently. Some agents ignore the skill entirely and write their own `System.Windows.Forms` PowerShell code — which corrupts the session with DeepSeek-V4.
+
+**问题：** SKILL.md 描述是建议性的，不同 Agent 对"图片"关键词解读不一致。有些 Agent 完全忽略 Skill，自己写 `System.Windows.Forms` 代码，导致 DeepSeek-V4 会话损坏。
+
+**Solution:** Direct skill name invocation is the ONLY reliable trigger. User starts conversation with:
+
+**解决：** 直接引用 Skill 名称是唯一可靠的触发方式。对话开始时说：
+
+| Trigger | Reliability |
+|----------|-------------|
+| `调用识图` | ⭐⭐⭐ Best — 3 chars, hits skill name |
+| `image-recognition` | ⭐⭐⭐ Direct skill name match |
+| `启动识图` | ⭐⭐ May route through Skill Creator first |
+
+After triggering, ALL image tasks in the session route through Gemma 3 4B automatically.
+
+---
+
 > Route images through a local Ollama vision model — never pollute your LLM context with base64 image data again.
 > 通过本地 Ollama 视觉模型识别图片 — 再也不让 base64 图片数据污染 LLM 上下文。
 
@@ -256,6 +276,12 @@ ollama pull gemma3:4b
 **问题:** 用户希望 Skill 始终自动加载，而非每次手动触发。但如果在持久化指令触发前图片已被发送，会话仍然会损坏。
 **结论:** 妥协方案 — 依靠 SKILL.md 的 MANDATORY 描述 + agent 训练来识别图片路径模式并自动路由。
 
+
+### 11. Skill 触发不一致 / Inconsistent Skill Trigger (v2.0)
+**问题:** 不同 Codex Agent 对 SKILL.md 的 keywords 匹配行为不一致。有些 Agent 看到"剪贴板"直接写 `Add-Type -AssemblyName System.Windows.Forms`，完全不走 Skill。用户说"启动识图"有时被路由到 Skill Creator 而非直接执行 `recognize_image.py`。
+**解决:** 实测发现 **直接引用 Skill 名称** (`调用识图`, `image-recognition`) 是唯一 100% 可靠的触发方式。将此发现写入 README 和 SKILL.md，推荐用户新对话首句说 `调用识图`。
+
+
 ### 10. 一键安装与分发
 **问题:** 用户需要简单方式安装到自己的 Codex。
 **解决:** 创建 `install.ps1` 脚本，自动检测 Python/Ollama/模型，一键安装所有依赖和技能文件。
@@ -265,3 +291,4 @@ ollama pull gemma3:4b
 ## License
 
 MIT
+
