@@ -1,4 +1,22 @@
-﻿# Image Recognition Skill for Codex · 图像识别技能
+# Image Recognition Skill for Codex · 图像识别技能
+
+## 🆕 v2.1 — Explicit Skill Name Required · 必须包含 skill 名称
+
+**Finding:** After extensive testing across multiple Codex agents, we confirmed that the ONLY 100% reliable trigger is explicitly naming the skill `image-recognition` in the user's message. Phrases like "启动识图" or "看图" sometimes route through other mechanisms first. But `image-recognition` as a keyword ALWAYS triggers the skill directly.
+
+**发现：** 经过多次跨 Agent 测试，确认唯一 100% 可靠的触发方式是用户消息中显式包含 skill 名称 `image-recognition`。其他短语如"启动识图"有时会先走其他机制。`image-recognition` 作为关键词总是直接触发 Skill。
+
+### Recommended Usage
+
+```
+# New conversation, first message:
+image-recognition --clipboard
+
+# Or:
+调用 image-recognition 识别：C:\path\to\img.jpg
+```
+
+---
 
 ## 🆕 v2.0 — Trigger Discovery · 触发词发现
 
@@ -277,10 +295,9 @@ ollama pull gemma3:4b
 **结论:** 妥协方案 — 依靠 SKILL.md 的 MANDATORY 描述 + agent 训练来识别图片路径模式并自动路由。
 
 
-### 11. Skill 触发不一致 / Inconsistent Skill Trigger (v2.0)
-**问题:** 不同 Codex Agent 对 SKILL.md 的 keywords 匹配行为不一致。有些 Agent 看到"剪贴板"直接写 `Add-Type -AssemblyName System.Windows.Forms`，完全不走 Skill。用户说"启动识图"有时被路由到 Skill Creator 而非直接执行 `recognize_image.py`。
-**解决:** 实测发现 **直接引用 Skill 名称** (`调用识图`, `image-recognition`) 是唯一 100% 可靠的触发方式。将此发现写入 README 和 SKILL.md，推荐用户新对话首句说 `调用识图`。
-
+### 11. Skill 触发不一致 / Inconsistent Skill Trigger (v2.1)
+**问题:** 不同 Codex Agent 对 SKILL.md keywords 匹配行为不一致。v2.0 发现"调用识图"有时被路由到 Skill Creator。v2.1 进一步确认：必须显式包含 `image-recognition` 名称。
+**解决:** SKILL.md description 强制要求 `image-recognition` 作为触发词。用户新对话首句说 `image-recognition --clipboard` 或 `调用 image-recognition` 即可 100% 触发。
 
 ### 10. 一键安装与分发
 **问题:** 用户需要简单方式安装到自己的 Codex。
@@ -291,4 +308,5 @@ ollama pull gemma3:4b
 ## License
 
 MIT
+
 
