@@ -1,5 +1,21 @@
 # Image Recognition Skill for Codex · 图像识别技能
 
+## 🆕 v2.1.1 — "skill" Keyword Required · 必须包含 skill 关键词
+
+**Critical fix:** `image-recognition` alone is NOT enough. The user message MUST contain both `image-recognition` AND the word `skill`. Without `skill`, Codex treats it as a shell command rather than a skill invocation.
+
+**关键修复：** 单独 `image-recognition` 不够。用户消息必须同时包含 `image-recognition` 和 `skill`。缺少 `skill` 时 Codex 会将其视为 shell 命令而非 Skill 调用。
+
+### Correct Trigger
+
+```
+调用 image-recognition skill
+用 image-recognition skill 识别
+image-recognition skill --clipboard
+```
+
+---
+
 ## 🆕 v2.1 — Explicit Skill Name Required · 必须包含 skill 名称
 
 **Finding:** After extensive testing across multiple Codex agents, we confirmed that the ONLY 100% reliable trigger is explicitly naming the skill `image-recognition` in the user's message. Phrases like "启动识图" or "看图" sometimes route through other mechanisms first. But `image-recognition` as a keyword ALWAYS triggers the skill directly.
@@ -308,5 +324,6 @@ ollama pull gemma3:4b
 ## License
 
 MIT
+
 
 
