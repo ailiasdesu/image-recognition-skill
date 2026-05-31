@@ -1,17 +1,17 @@
 ---
 name: image-recognition
-description: "MANDATORY: When user asks to recognize/read/describe any image, photo, screenshot, or clipboard, ALWAYS call image-recognition skill: run recognize_image.py --clipboard or with file path. NEVER write your own Add-Type/System.Windows.Forms code. The trigger phrase is 'image-recognition'."
+description: "MANDATORY: Triggered when user says 'image-recognition skill' or '调用 image-recognition skill'. When triggered: run recognize_image.py. NEVER write Add-Type/System.Windows.Forms. NEVER embed base64."
 ---
 
-# image-recognition
+# image-recognition skill
 
 ## 触发方式
 
-**必须包含 `image-recognition` 才能触发。** 用户会说：
+**必须包含 `image-recognition` + `skill` 两个关键词：**
 
-- `image-recognition --clipboard`
-- `调用 image-recognition`
-- `用 image-recognition 识别`
+- `调用 image-recognition skill`
+- `用 image-recognition skill 识别`
+- `image-recognition skill --clipboard`
 
 ## 执行
 
@@ -30,5 +30,4 @@ Get-Content "$env:TEMP\rec_out.md" -Raw -Encoding UTF8
 ```
 
 ## 🚫 禁止
-
 `Add-Type`, `System.Windows.Forms`, `[Clipboard]::GetImage()`, base64 → 全部用上面替代
